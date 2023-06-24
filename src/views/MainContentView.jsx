@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer} from 'react';
 import "../App.css";
 
 const MainContentView = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+
+    const initialState = {
+        firstName: "",
+        lastName: ""
+    }
+
+    // const [firstName, setFirstName] = useState("");
+    // const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,18 +21,33 @@ const MainContentView = (props) => {
     const [errMsgPassword, setErrMsgPassword] = useState("");
     const [errMsgPasswordConfirm, setErrMsgPasswordConfirm] = useState("");
 
+    const reducer = (state, action) => {
+        return {
+            ...state,
+            [action.type]: action.payload
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
     const handleFirstNameChange = (e) => {
-        const text = e.target.value;
-        setFirstName(text);
-        (text.length < 3) && (text.length > 0) ?
+        const { name, value } = e.target;
+        dispatch({
+            type: name,
+            payload: value
+        });
+        (value.length < 3) && (value.length > 0) ?
             setErrMsgFirstName("First name must be at least 3 (three) characters in length") :
             setErrMsgFirstName("");
     }
-
+    
     const handleLastNameChange = (e) => {
-        const text = e.target.value;
-        setLastName(text);
-        (text.length < 3) && (text.length > 0) ?
+        const { name, value } = e.target;
+        dispatch({
+            type: name,
+            payload: value
+        });
+        (value.length < 3) && (value.length > 0) ?
             setErrMsgLastName("Last name must be at least 3 (three) characters in length") :
             setErrMsgLastName("");
     }
@@ -59,9 +80,10 @@ const MainContentView = (props) => {
 
     const createUser = e => {
         e.preventDefault();
-        const newUser = { firstName, lastName, email, password };
-        console.log("*** Create User ***")
-        console.log(`New User: ${firstName} ${lastName}`)
+        const firstName = state.firstName;
+        const lastname = state.lastName;
+        const newUser = {firstName, lastname};
+        console.log(`*** New User created: ${state.firstName} ${state.lastName}`);
         setHasBeenSubmitted(true);
     }
 
@@ -75,11 +97,12 @@ const MainContentView = (props) => {
                         <h3>Thanks for creating a user</h3> :
                         <h3>Welcome, please submit a user</h3>
                 }
+                <p>state: {JSON.stringify(state)}</p>
                 <hr />
                 {/* **** First Name **** */}
                 <div className='flexRow'>
                     <label >First Name:</label>
-                    <input type='text' className='inputBar' onChange={handleFirstNameChange} placeholder='Enter first name here' />
+                    <input type='text' className='inputBar' onChange={handleFirstNameChange} placeholder='Enter first name here' name='firstName' value={state.firstName} />
                 </div>
                 {
                     errMsgFirstName ?
@@ -89,7 +112,7 @@ const MainContentView = (props) => {
                 {/* **** Last Name **** */}
                 <div className='flexRow'>
                     <label >Last Name:</label>
-                    <input type='text' className='inputBar' onChange={handleLastNameChange} placeholder='Enter last name here' />
+                    <input type='text' className='inputBar' onChange={handleLastNameChange} placeholder='Enter last name here' name='lastName' value={ state.lastName } />
                 </div>
                 {
                     errMsgLastName ?
@@ -135,10 +158,10 @@ const MainContentView = (props) => {
                 <h3>User Info</h3>
                 <hr />
                 <p>
-                    <span className='txtBold'>First name:</span> {firstName}
+                    <span className='txtBold'>First name:</span> {state.firstName}
                 </p>
                 <p>
-                    <span className='txtBold'>Last name:</span> {lastName}
+                    <span className='txtBold'>Last name:</span> {state.lastName}
                 </p>
                 <p>
                     <span className='txtBold'>E-mail:</span> {email}
