@@ -64,3 +64,10 @@ label {
   font-weight: bold;
   color: white;
 }
+
+.warning-msg {
+  color: red;
+  background-color: yellow;
+  text-align: center;
+  border-radius: 5px;
+}

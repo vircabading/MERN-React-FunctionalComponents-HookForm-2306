@@ -10,6 +10,7 @@ const MainContentView = (props) => {
 
     const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
     const [errMsgFirstName, setErrMsgFirstName] = useState("");
+    const [errMsgLastName, setErrMsgLastName] = useState("");
 
     const handleFirstNameChange = (e) => {
         const text = e.target.value;
@@ -20,7 +21,11 @@ const MainContentView = (props) => {
     }
 
     const handleLastNameChange = (e) => {
-        setLastName(e.target.value);
+        const text = e.target.value;
+        setLastName(text);
+        (text.length < 3) && (text.length > 0) ?
+            setErrMsgLastName("Last name must be at least 3 (three) characters in length") :
+            setErrMsgLastName("");
     }
 
     const handleEmailChange = e => {
@@ -61,7 +66,7 @@ const MainContentView = (props) => {
                 </div>
                 {
                     errMsgFirstName ?
-                    <p>{ errMsgFirstName }</p> :
+                    <p className='warning-msg'>{ errMsgFirstName }</p> :
                     <p>&nbsp;</p>
                 }
                 {/* **** Last Name **** */}
@@ -69,7 +74,11 @@ const MainContentView = (props) => {
                     <label >Last Name:</label>
                     <input type='text' className='inputBar' onChange={handleLastNameChange} placeholder='Enter last name here'/>
                 </div>
-                <br />
+                {
+                    errMsgLastName ?
+                    <p className='warning-msg'>{ errMsgLastName }</p> :
+                    <p>&nbsp;</p>
+                }
                 {/* **** E-mail **** */}
                 <div className='flexRow'>
                     <label >E-mail:</label>
