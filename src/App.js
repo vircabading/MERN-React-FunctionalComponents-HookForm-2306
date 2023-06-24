@@ -1,17 +1,15 @@
 import './App.css';
+import MainContentView from './views/MainContentView';
 
 function App() {
   return (
     <div className='window roundedBdr' >
+      {/* **** Header ******** */}
       <header className='roundedBdr'>
         <h1>Hook Form</h1>
       </header>
-      <div>
-        <div className='flexRow'>
-          <div className='col1 pad10 roundedBdr'>Form</div>
-          <div className='col1 pad10 roundedBdr'>Form Info</div>
-        </div>
-      </div>
+      {/* **** Main Content Area ******** */}
+      <MainContentView />
     </div>
   );
 }

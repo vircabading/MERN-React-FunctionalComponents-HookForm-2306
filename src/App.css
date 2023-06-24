@@ -6,6 +6,10 @@
   padding: 10px;
 }
 
+.txtBold {
+  font-weight: bold;
+}
+
 .window {
   background-color: white;
   margin-left: 3%;
@@ -32,6 +36,31 @@ header {
 }
 
 .col1 {
-  flex-grow: 1;
+  width: 50%;
   background-color: #D499B9;
+}
+
+label {
+  width: 25px;
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.inputBar {
+  flex-grow: 4;
+  border-radius: 5px;
+  border: none;
+  padding: 3px;
+}
+
+.btn {
+  background-color: #031739;
+  border-radius: 25px;
+  border: none;
+  padding: 5px 8px;
+  margin: 2%;
+  margin-top: 4%;
+  text-align: center;
+  font-weight: bold;
+  color: white;
 }
