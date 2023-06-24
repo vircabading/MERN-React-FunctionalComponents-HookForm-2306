@@ -13,6 +13,7 @@ const MainContentView = (props) => {
     const [errMsgLastName, setErrMsgLastName] = useState("");
     const [errMsgEmail, setErrMsgEmail] = useState("");
     const [errMsgPassword, setErrMsgPassword] = useState("");
+    const [errMsgPasswordConfirm, setErrMsgPasswordConfirm] = useState("");
 
     const handleFirstNameChange = (e) => {
         const text = e.target.value;
@@ -49,7 +50,11 @@ const MainContentView = (props) => {
     }
 
     const handleConfirmPasswordChange = e => {
-        setConfirmPassword(e.target.value);
+        const text = e.target.value;
+        setConfirmPassword(text);
+        (text == password) ?
+            setErrMsgPasswordConfirm("") :
+            setErrMsgPasswordConfirm("Password must match Confirm Password");
     }
 
     const createUser = e => {
@@ -116,6 +121,11 @@ const MainContentView = (props) => {
                     <label >Confirm Password:</label>
                     <input type='text' className='inputBar' onChange={handleConfirmPasswordChange} placeholder='************' />
                 </div>
+                {
+                    errMsgPasswordConfirm ?
+                        <p className='warning-msg'>{errMsgPasswordConfirm}</p> :
+                        <p>&nbsp;</p>
+                }
                 <input type="submit" className='btn' value="Create User" />
             </form>
 
