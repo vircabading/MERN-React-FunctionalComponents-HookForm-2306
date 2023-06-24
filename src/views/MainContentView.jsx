@@ -9,10 +9,14 @@ const MainContentView = (props) => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
+    const [errMsgFirstName, setErrMsgFirstName] = useState("");
 
     const handleFirstNameChange = (e) => {
-        setFirstName(e.target.value);
-        console.log(`first name is ${firstName}`)
+        const text = e.target.value;
+        setFirstName(text);
+        (text.length < 3) && (text.length > 0) ?
+            setErrMsgFirstName("First name must be at least 3 (three) characters in length") :
+            setErrMsgFirstName("");
     }
 
     const handleLastNameChange = (e) => {
@@ -43,6 +47,7 @@ const MainContentView = (props) => {
         <div className='flexRow'>
             {/* **** Form Area ******** */}
             <form className='col1 pad10 roundedBdr' onSubmit={ createUser }>
+                {/* **** Submit Message **** */}
                 {
                     hasBeenSubmitted ?
                     <h3>Thanks for creating a user</h3> :
@@ -54,7 +59,11 @@ const MainContentView = (props) => {
                     <label >First Name:</label>
                     <input type='text' className='inputBar' onChange={handleFirstNameChange} placeholder='Enter first name here' />
                 </div>
-                <br />
+                {
+                    errMsgFirstName ?
+                    <p>{ errMsgFirstName }</p> :
+                    <p>&nbsp;</p>
+                }
                 {/* **** Last Name **** */}
                 <div className='flexRow'>
                     <label >Last Name:</label>
@@ -84,7 +93,7 @@ const MainContentView = (props) => {
 
             {/* **** Display's user info ******** */}
             <div className='col1 pad10 roundedBdr'>
-                <h3>Form Info</h3>
+                <h3>User Info</h3>
                 <hr />
                 <p>
                     <span className='txtBold'>First name:</span> {firstName}
