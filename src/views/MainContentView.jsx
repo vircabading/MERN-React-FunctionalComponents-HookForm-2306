@@ -12,6 +12,7 @@ const MainContentView = (props) => {
     const [errMsgFirstName, setErrMsgFirstName] = useState("");
     const [errMsgLastName, setErrMsgLastName] = useState("");
     const [errMsgEmail, setErrMsgEmail] = useState("");
+    const [errMsgPassword, setErrMsgPassword] = useState("");
 
     const handleFirstNameChange = (e) => {
         const text = e.target.value;
@@ -40,7 +41,11 @@ const MainContentView = (props) => {
     }
 
     const handlePasswordChange = e => {
-        setPassword(e.target.value);
+        const text = e.target.value;
+        setPassword(text);
+        ((text.length > 0) && (text.length < 8)) ?
+            setErrMsgPassword("Password must be at least 8 (eight) characters in length") :
+            setErrMsgPassword("");
     }
 
     const handleConfirmPasswordChange = e => {
@@ -95,13 +100,17 @@ const MainContentView = (props) => {
                     errMsgEmail ?
                         <p className='warning-msg'>{errMsgEmail}</p> :
                         <p>&nbsp;</p>
-}
+                }
                 {/* **** Password **** */}
                 <div className='flexRow'>
                     <label >Password:</label>
                     <input type='text' className='inputBar' onChange={handlePasswordChange} placeholder='************' />
                 </div>
-                <br />
+                {
+                    errMsgPassword ?
+                        <p className='warning-msg'>{errMsgPassword}</p> :
+                        <p>&nbsp;</p>
+                }
                 {/* **** Confirm Password **** */}
                 <div className='flexRow'>
                     <label >Confirm Password:</label>
